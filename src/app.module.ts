@@ -1,10 +1,25 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module, ValidationPipe } from '@nestjs/common';
+import { FilmsModule } from './films/films.module';
+import { CommonModule } from './common/common.module';
+import { CharactersModule } from './characters/characters.module';
+import { CommentsModule } from './comments/comments.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from './config/config.module';
+import { ConfigService } from './config/config.service';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    FilmsModule,
+    CommonModule,
+    CharactersModule,
+    CommentsModule,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useExisting: ConfigService,
+    }),
+    ConfigModule,
+  ],
+  providers: [{ provide: APP_PIPE, useClass: ValidationPipe }],
 })
 export class AppModule {}
