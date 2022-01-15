@@ -1,4 +1,8 @@
-import { Module, ValidationPipe } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  Module,
+  ValidationPipe,
+} from '@nestjs/common';
 import { FilmsModule } from './films/films.module';
 import { CommonModule } from './common/common.module';
 import { CharactersModule } from './characters/characters.module';
@@ -6,7 +10,7 @@ import { CommentsModule } from './comments/comments.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
-import { APP_PIPE } from '@nestjs/core';
+import { APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -20,6 +24,9 @@ import { APP_PIPE } from '@nestjs/core';
     }),
     ConfigModule,
   ],
-  providers: [{ provide: APP_PIPE, useClass: ValidationPipe }],
+  providers: [
+    { provide: APP_PIPE, useClass: ValidationPipe },
+    { provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor },
+  ],
 })
 export class AppModule {}

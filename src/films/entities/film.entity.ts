@@ -1,4 +1,5 @@
 import { getIdFromUrl } from '../../common/functions/getIdFromUrl.function';
+import { Exclude } from 'class-transformer';
 
 export class Film {
   constructor(film: Record<string, any>) {
@@ -9,6 +10,7 @@ export class Film {
     this.director = film.director;
     this.producer = film.producer;
     this.releaseDate = film.release_date;
+    this.characters = film.characters;
     this.url = film.url;
   }
 
@@ -21,4 +23,7 @@ export class Film {
   releaseDate: Date;
   commentCount: number;
   url: string;
+
+  @Exclude()
+  characters?: string[];
 }

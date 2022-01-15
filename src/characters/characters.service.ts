@@ -10,12 +10,7 @@ export class CharactersService {
   findMany(ids: number[]) {
     return from(ids)
       .pipe(map((id) => this.findOne(id)))
-      .pipe(combineLatestAll())
-      .pipe(
-        map((characters) => {
-          return characters.sort((a, b) => b.id - a.id);
-        }),
-      );
+      .pipe(combineLatestAll());
   }
 
   findOne(id: number) {
