@@ -19,7 +19,7 @@ export class Comment {
   @Column({ type: 'varchar', length: 500 })
   text: string;
 
-  @Column({ name: 'commenter_ip_address', type: 'varchar', length: '15' })
+  @Column({ name: 'commenter_ip_address', type: 'varchar', length: '30' })
   commenterIpAddress: string;
 
   @CreateDateColumn()
