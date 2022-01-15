@@ -7,7 +7,7 @@ import {
 import { HttpService } from '@nestjs/axios';
 import { catchError, map } from 'rxjs';
 import { Film } from './entities/film.entity';
-import { idFromUrlPattern } from '../common/constants';
+import { getIdFromUrl } from '../common/functions/get-id-from-url.function';
 
 @Injectable()
 export class FilmsService {
@@ -28,7 +28,7 @@ export class FilmsService {
       map((film) => new Film(film)),
 
       catchError((err) => {
-        if (err.response.status == HttpStatus.NOT_FOUND) {
+        if (err.response?.status == HttpStatus.NOT_FOUND) {
           throw new NotFoundException(`No film with ID ${id} found`);
         }
         throw new HttpException(err.message, HttpStatus.FAILED_DEPENDENCY);
@@ -38,11 +38,9 @@ export class FilmsService {
 
   getCharacterIds(id: number) {
     return this.findOne(id).pipe(
-      map((film) => film.characters),
-      map((characters) => {
-        return characters.map((character) =>
-          parseInt(character.match(idFromUrlPattern)[0]),
-        );
+      map((film) => film.characterUrls),
+      map((characterUrls) => {
+        return characterUrls.map((characterUrl) => getIdFromUrl(characterUrl));
       }),
     );
   }

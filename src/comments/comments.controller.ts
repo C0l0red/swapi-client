@@ -12,6 +12,7 @@ import { CommentsService } from './comments.service';
 import { CommentDto } from './dto/comment.dto';
 import { Request } from 'express';
 import { ValidateFilmIdGuard } from './guards/validate-film-id.guard';
+import { getIpAddressFromRequest } from '../common/functions/get-ip-address-from-request.function';
 
 @UseGuards(ValidateFilmIdGuard)
 @Controller('films/:filmId/comments')
@@ -24,7 +25,7 @@ export class CommentsController {
     @Body() commentDto: CommentDto,
     @Req() request: Request,
   ) {
-    commentDto.commenterIpAddress = request.ip;
+    commentDto.commenterIpAddress = getIpAddressFromRequest(request);
     commentDto.filmId = filmId;
     return this.commentsService.create(commentDto);
   }
