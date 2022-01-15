@@ -19,11 +19,7 @@ export class ConfigService implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions {
     return {
       type: 'postgres',
-      host: this.getValue('DB_HOST'),
-      port: this.getValue('DB_PORT'),
-      username: this.getValue('DB_USER'),
-      password: this.getValue('DB_PASSWORD'),
-      database: this.getValue('DB_NAME'),
+      url: this.getValue('DATABASE_URL'),
       entities: ['dist/**/*.entity.{ts,js}'],
       migrations: ['dist/migrations/*.{ts,js}'],
       migrationsTableName: 'migration',
