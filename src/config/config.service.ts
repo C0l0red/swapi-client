@@ -28,16 +28,22 @@ export class ConfigService implements TypeOrmOptionsFactory {
   }
 
   createTypeOrmOptions(): Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions {
+    const extra = {
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    };
     return {
       type: 'postgres',
       url: this.getValue('DATABASE_URL'),
       entities: ['dist/**/*.entity.{ts,js}'],
       migrations: ['dist/migrations/*.{ts,js}'],
       migrationsTableName: 'migration',
+      ssl: this.isProduction(),
       cli: {
         migrationsDir: 'src/migrations',
       },
-      ssl: this.isProduction(),
+      extra: this.isProduction() ? extra : {},
     };
   }
 }
