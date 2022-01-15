@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
+import { Environment } from '../common/enums/environment.enum';
 
 dotenv.config();
 
@@ -16,6 +17,16 @@ export class ConfigService implements TypeOrmOptionsFactory {
     }
     return value;
   }
+
+  isProduction(): boolean {
+    const environment: Environment = this.getValue('NODE_ENV');
+
+    if (!(environment in Environment))
+      throw new Error(`${environment} is not a valid Environment option`);
+
+    return environment === Environment.production;
+  }
+
   createTypeOrmOptions(): Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions {
     return {
       type: 'postgres',
@@ -26,6 +37,7 @@ export class ConfigService implements TypeOrmOptionsFactory {
       cli: {
         migrationsDir: 'src/migrations',
       },
+      ssl: this.isProduction(),
     };
   }
 }
