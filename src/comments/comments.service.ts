@@ -12,10 +12,15 @@ export class CommentsService {
   ) {}
 
   create(commentDto: CommentDto) {
-    this.commentRepository.create(commentDto);
+    const comment: Comment = this.commentRepository.create(commentDto);
+    return this.commentRepository.save(comment);
   }
 
-  findAll() {
-    return this.commentRepository.find();
+  findMany(filmId: number) {
+    return this.commentRepository.find({ filmId: filmId });
+  }
+
+  getCountForFilm(filmId: number) {
+    return this.commentRepository.count({ filmId: filmId });
   }
 }

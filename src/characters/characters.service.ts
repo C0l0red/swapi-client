@@ -8,15 +8,16 @@ export class CharactersService {
   constructor(private readonly httpService: HttpService) {}
 
   findMany(ids: number[]) {
-    return from(ids)
-      .pipe(map((id) => this.findOne(id)))
-      .pipe(combineLatestAll());
+    return from(ids).pipe(
+      map((id) => this.findOne(id)),
+      combineLatestAll(),
+    );
   }
 
   findOne(id: number) {
-    return this.httpService
-      .get(`people/${id}`)
-      .pipe(map((res) => res.data))
-      .pipe(map((character) => new Character(character)));
+    return this.httpService.get(`people/${id}`).pipe(
+      map((res) => res.data),
+      map((character) => new Character(character)),
+    );
   }
 }

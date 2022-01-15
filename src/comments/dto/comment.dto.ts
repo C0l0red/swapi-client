@@ -4,4 +4,7 @@ export class CommentDto {
   @IsString()
   @MaxLength(500)
   text: string;
+
+  commenterIpAddress?: string;
+  filmId?: number;
 }

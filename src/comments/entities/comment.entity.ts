@@ -7,7 +7,10 @@ import {
 
 @Entity()
 export class Comment {
-  @PrimaryGeneratedColumn('uuid', { name: 'comment_id' })
+  constructor(partialComment: Partial<Comment>) {
+    Object.assign(this, partialComment);
+  }
+  @PrimaryGeneratedColumn('increment', { name: 'comment_id' })
   id: number;
 
   @Column({ name: 'film_id', type: 'integer' })
@@ -21,7 +24,4 @@ export class Comment {
 
   @CreateDateColumn()
   created: Date;
-
-  @Column({ type: 'varchar', length: 120 })
-  url: string;
 }
