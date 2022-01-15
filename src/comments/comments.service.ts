@@ -17,7 +17,11 @@ export class CommentsService {
   }
 
   findMany(filmId: number) {
-    return this.commentRepository.find({ filmId: filmId });
+    return this.commentRepository
+      .createQueryBuilder('comment')
+      .where('comment.film_id = :filmId', { filmId })
+      .orderBy('comment.created', 'DESC')
+      .getMany();
   }
 
   getCountForFilm(filmId: number) {

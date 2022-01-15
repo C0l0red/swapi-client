@@ -5,16 +5,19 @@ import {
   ParseArrayPipe,
   ParseIntPipe,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CharactersService } from './characters.service';
 import { EnsureCharacterIdsGuard } from './guards/ensure-character-ids.guard';
 import { EnsureCharacterInFilmGuard } from './guards/ensure-character-in-film.guard';
+import { ApplyQueryParamsInterceptor } from '../common/interceptors/apply-query-params.interceptor';
 
 @Controller('films/:filmId/characters')
 export class CharactersController {
   constructor(private readonly characterService: CharactersService) {}
 
   @UseGuards(EnsureCharacterIdsGuard)
+  @UseInterceptors(ApplyQueryParamsInterceptor)
   @Get()
   findAllForFilm(
     @Param('characterIds', ParseArrayPipe) characterIdStrings: string[],

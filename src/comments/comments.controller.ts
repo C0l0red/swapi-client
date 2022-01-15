@@ -7,12 +7,14 @@ import {
   Post,
   Req,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CommentDto } from './dto/comment.dto';
 import { Request } from 'express';
 import { ValidateFilmIdGuard } from './guards/validate-film-id.guard';
 import { getIpAddressFromRequest } from '../common/functions/get-ip-address-from-request.function';
+import { ApplyQueryParamsInterceptor } from '../common/interceptors/apply-query-params.interceptor';
 
 @UseGuards(ValidateFilmIdGuard)
 @Controller('films/:filmId/comments')
@@ -30,6 +32,7 @@ export class CommentsController {
     return this.commentsService.create(commentDto);
   }
 
+  @UseInterceptors(ApplyQueryParamsInterceptor)
   @Get()
   findAllForFilm(@Param('filmId', ParseIntPipe) filmId: number) {
     return this.commentsService.findMany(filmId);
