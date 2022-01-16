@@ -4,6 +4,7 @@ import { CharactersController } from './characters.controller';
 import { HttpModule } from '@nestjs/axios';
 import { FilmsModule } from '../films/films.module';
 
+// Module for all Character operations
 @Module({
   imports: [
     HttpModule.register({ baseURL: 'https://swapi.py4e.com/api' }),

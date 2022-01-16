@@ -6,8 +6,9 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 
+// Asserts that the characterId in the path param exists in the Film with filmId
 @Injectable()
-export class EnsureCharacterInFilmGuard implements CanActivate {
+export class AssertCharacterInFilmGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const request: Request = context.switchToHttp().getRequest();
     const characterId: string = request.params.id;

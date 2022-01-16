@@ -5,8 +5,10 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+// Comment Entity
 @Entity()
 export class Comment {
+  // Destructures partial comment DTO into Comment Object
   constructor(partialComment: Partial<Comment>) {
     Object.assign(this, partialComment);
   }

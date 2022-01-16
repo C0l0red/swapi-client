@@ -3,12 +3,15 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { Environment } from '../common/enums/environment.enum';
 
+// Loads .env file if exists
 dotenv.config();
 
+// Handles all Config data using environment variables and hard-coded values
 @Injectable()
 export class ConfigService implements TypeOrmOptionsFactory {
   private readonly env: Record<string, any> = process.env;
 
+  // Gets a value from environment variables, throws an Error if missing
   getValue(key: string, throwOnMissing = true) {
     const value = this.env[key];
 
@@ -18,6 +21,8 @@ export class ConfigService implements TypeOrmOptionsFactory {
     return value;
   }
 
+  // Checks if App Environment is in Production
+  // Throws an error if NODE_ENV environment variable is wrong
   isProduction(): boolean {
     const environment: Environment = this.getValue('NODE_ENV');
 
@@ -27,7 +32,8 @@ export class ConfigService implements TypeOrmOptionsFactory {
     return environment === Environment.production;
   }
 
-  createTypeOrmOptions(): Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions {
+  // Creates configurations for TypeORM
+  createTypeOrmOptions(): TypeOrmModuleOptions {
     const extra = {
       ssl: {
         rejectUnauthorized: false,

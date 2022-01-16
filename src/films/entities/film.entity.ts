@@ -1,7 +1,9 @@
 import { getIdFromUrl } from '../../common/functions/get-id-from-url.function';
 import { Exclude } from 'class-transformer';
 
+// Film Entity
 export class Film {
+  // Creates a Film Object from a Film Object from the API
   constructor(film: Record<string, any>) {
     this.id = getIdFromUrl(film.url);
     this.title = film.title;
@@ -24,6 +26,7 @@ export class Film {
   commentCount: number;
   url: string;
 
+  // Excludes characterUrls from responses
   @Exclude()
   characterUrls?: string[];
 }

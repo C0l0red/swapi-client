@@ -16,11 +16,13 @@ import { ValidateFilmIdGuard } from './guards/validate-film-id.guard';
 import { getIpAddressFromRequest } from '../common/functions/get-ip-address-from-request.function';
 import { ApplyQueryParamsInterceptor } from '../common/interceptors/apply-query-params.interceptor';
 
+// Handles requests to the Comments endpoint
 @UseGuards(ValidateFilmIdGuard)
 @Controller('films/:filmId/comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
+  // Creates a Comment for a Film with filmId, attaches the commenter's IP address
   @Post()
   create(
     @Param('filmId', ParseIntPipe) filmId: number,
@@ -32,6 +34,7 @@ export class CommentsController {
     return this.commentsService.create(commentDto);
   }
 
+  // Responds with all Comments made for a Film with filmId
   @UseInterceptors(ApplyQueryParamsInterceptor)
   @Get()
   findAllForFilm(@Param('filmId', ParseIntPipe) filmId: number) {

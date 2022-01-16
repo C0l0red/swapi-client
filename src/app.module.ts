@@ -12,6 +12,7 @@ import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
 import { APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 
+// Module for the Application
 @Module({
   imports: [
     FilmsModule,
