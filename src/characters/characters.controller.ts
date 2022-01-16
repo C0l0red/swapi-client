@@ -11,6 +11,7 @@ import { CharactersService } from './characters.service';
 import { EnsureCharacterIdsGuard } from './guards/ensure-character-ids.guard';
 import { AssertCharacterInFilmGuard } from './guards/assert-character-in-film.guard';
 import { ApplyQueryParamsInterceptor } from '../common/interceptors/apply-query-params.interceptor';
+import { AddExtraPropertiesInterceptor } from './interceptors/add-extra-properties.interceptor';
 
 // Handles requests to the Characters endpoint
 @Controller('films/:filmId/characters')
@@ -19,7 +20,7 @@ export class CharactersController {
 
   // Responds with all Character Objects for Film with filmId
   @UseGuards(EnsureCharacterIdsGuard)
-  @UseInterceptors(ApplyQueryParamsInterceptor)
+  @UseInterceptors(AddExtraPropertiesInterceptor, ApplyQueryParamsInterceptor)
   @Get()
   findAllForFilm(
     @Param('characterIds', ParseArrayPipe) characterIdStrings: string[],
