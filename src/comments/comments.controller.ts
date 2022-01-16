@@ -15,8 +15,10 @@ import { Request } from 'express';
 import { ValidateFilmIdGuard } from './guards/validate-film-id.guard';
 import { getIpAddressFromRequest } from '../common/functions/get-ip-address-from-request.function';
 import { ApplyQueryParamsInterceptor } from '../common/interceptors/apply-query-params.interceptor';
+import { ApiTags } from '@nestjs/swagger';
 
 // Handles requests to the Comments endpoint
+@ApiTags('comments')
 @UseGuards(ValidateFilmIdGuard)
 @Controller('films/:filmId/comments')
 export class CommentsController {
