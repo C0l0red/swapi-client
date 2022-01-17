@@ -3,7 +3,6 @@ import {
   Get,
   Param,
   ParseIntPipe,
-  Req,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -14,7 +13,7 @@ import { ApplyQueryParamsInterceptor } from '../common/interceptors/apply-query-
 import { AddExtraPropertiesInterceptor } from './interceptors/add-extra-properties.interceptor';
 import { ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Gender } from '../common/enums/gender.enum';
-import { Request } from 'express';
+import { CharacterIds } from './decorators/character-ids.decorator';
 
 // Handles requests to the Characters endpoint
 @ApiTags('characters')
@@ -30,9 +29,7 @@ export class CharactersController {
   @ApiQuery({ name: 'sort', required: false })
   @ApiQuery({ name: 'order', required: false })
   @Get()
-  findAllForFilm(@Req() request: Request) {
-    const characterIdStrings: string[] = request.params.characterIds.split(',');
-    const characterIds: number[] = characterIdStrings.map((id) => parseInt(id));
+  findAllForFilm(@CharacterIds() characterIds: number[]) {
     return this.characterService.findMany(characterIds);
   }
 

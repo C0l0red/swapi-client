@@ -2,7 +2,7 @@ import { Gender } from '../../common/enums/gender.enum';
 import { getIdFromUrl } from '../../common/functions/get-id-from-url.function';
 
 // Character Entity
-export class Character {
+export default class Character {
   // Creates a Character Entity from a People object from the API
   constructor(character: Record<string, any>) {
     this.id = getIdFromUrl(character.url);

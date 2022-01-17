@@ -4,7 +4,7 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
-import { Character } from '../entities/character.entity';
+import Character from '../entities/character.entity';
 import { map, Observable } from 'rxjs';
 
 // Interceptor to add extra properties to a Character response Object

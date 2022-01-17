@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { combineLatestAll, from, map } from 'rxjs';
-import { Character } from './entities/character.entity';
+import Character from './entities/character.entity';
 
 // Handles Character data using the swapi.py4e.com/people API endpoint
 @Injectable()
