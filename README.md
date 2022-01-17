@@ -24,6 +24,16 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Test
+
+```bash
+# unit tests
+$ npm run test
+
+# test coverage
+$ npm run test:cov
+```
+
 ## Deployment
 The API is deployed to [Heroku](http://swapi-nestjs.herokuapp.com).
 
